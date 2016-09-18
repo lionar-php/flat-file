@@ -1,0 +1,29 @@
+{
+	"name": "lionar/flat-file",
+	"version": "0.0.1",
+	"description": "Lionar's flat file storage stack.",
+	"keywords": [ "Lionar", "Flat file", "Storage", "Stack" ],
+	"license": "MIT",
+	"require" : {
+		"lionar/agreements": "*",
+		"lionar/file-system": "*",
+		"php": ">=5.5.9"
+  	},
+	"require-dev": {
+		"lionar/testing": "*"
+	},
+	"autoload": {
+	    "psr-4": {
+			"FlatFile\\": "source"
+		}
+  	},
+	"autoload-dev": {
+		"psr-4": {
+			"FlatFile\\Tests\\": "tests"
+		}
+	},
+	"config": {
+		"preferred-install": "dist"
+	},
+	"minimum-stability": "dev"
+}
