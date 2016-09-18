@@ -20,7 +20,7 @@ class Stack implements \Agreed\Storage\Stack
 	
 	public function append ( $identifier, $entity )
 	{
-		$data = unserialize ( $this->file->contents );
+		$data = unserialize ( $this->file->content );
 		$data [ $identifier ] = $entity;
 		$this->file->write ( serialize ( $data ) );
 		$this->write ( $this->file );
@@ -28,7 +28,7 @@ class Stack implements \Agreed\Storage\Stack
 
 	public function has ( $identifier ) : bool
 	{
-		return array_key_exists ( $identifier, unserialize ( $this->file->contents ) );
+		return array_key_exists ( $identifier, unserialize ( $this->file->content ) );
 	}
 
 	private function add ( FileSystem $fileSystem )

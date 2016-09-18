@@ -10,7 +10,7 @@ use Testing\TestCase;
 class StackTest extends TestCase
 {
 	private $stack, $file, $fileSystems = null;
-	private $preContents = '';
+	private $preContent = '';
 
 	public function setUp ( )
 	{
@@ -19,14 +19,14 @@ class StackTest extends TestCase
 			$fileSystem = Mockery::mock ( 'FileSystem\\FileSystems\\LocalFileSystem' ),
 		);
 
-		$preContents = serialize ( array ( 'uniqid' => 'unique id entity' ) );
+		$preContent = serialize ( array ( 'uniqid' => 'unique id entity' ) );
 		$file = Mockery::mock ( 'FileSystem\\File' );
-		$file->contents = $preContents;
+		$file->content = $preContent;
 
 		$this->stack = new Stack ( $fileSystems, $file );
 		$this->file = $file;
 		$this->fileSystems = $fileSystems;
-		$this->preContents = $preContents;
+		$this->preContent = $preContent;
 	}
 
 	/*
@@ -74,7 +74,7 @@ class StackTest extends TestCase
 		$identifier = 'id';
 		$entity = 'entity';
 
-		$content = serialize ( array_merge ( unserialize ( $this->preContents ), array ( $identifier => $entity ) ) );
+		$content = serialize ( array_merge ( unserialize ( $this->preContent ), array ( $identifier => $entity ) ) );
 
 		$this->file->shouldReceive ( 'write' )->with ( $content )->once ( );
 

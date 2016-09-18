@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "213ced817c81556bd06e6ee244cb9937",
-    "content-hash": "e8b87bff8ca09b5d60466b1dabed9eea",
+    "hash": "5d30cac8f60f3aa5439b7b7cc1324bb3",
+    "content-hash": "ea3da92df2bcb3ecd7aa6f7dfffd7035",
     "packages": [
         {
             "name": "lionar/agreements",
@@ -59,13 +59,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/lionar/filesystem.git",
-                "reference": "525bc078263a828d12c15c04caa67994d567201c"
+                "url": "https://github.com/lionar/file-system.git",
+                "reference": "e92afb4a251bbad4cf44a82fccc676623ef58ea1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lionar/filesystem/zipball/525bc078263a828d12c15c04caa67994d567201c",
-                "reference": "525bc078263a828d12c15c04caa67994d567201c",
+                "url": "https://api.github.com/repos/lionar/file-system/zipball/e92afb4a251bbad4cf44a82fccc676623ef58ea1",
+                "reference": "e92afb4a251bbad4cf44a82fccc676623ef58ea1",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,10 @@
             "autoload": {
                 "psr-4": {
                     "FileSystem\\": "source"
-                }
+                },
+                "files": [
+                    "helpers.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -97,7 +100,7 @@
                 "file system",
                 "lionar"
             ],
-            "time": "2016-09-15 06:25:05"
+            "time": "2016-09-17 14:49:13"
         }
     ],
     "packages-dev": [
@@ -209,12 +212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lionar/testing.git",
-                "reference": "5740fe0a20bfa44f68bf8bf939ec420310a40bd8"
+                "reference": "6d940d9b89712541b19256db0e349114518bd15e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lionar/testing/zipball/5740fe0a20bfa44f68bf8bf939ec420310a40bd8",
-                "reference": "5740fe0a20bfa44f68bf8bf939ec420310a40bd8",
+                "url": "https://api.github.com/repos/lionar/testing/zipball/6d940d9b89712541b19256db0e349114518bd15e",
+                "reference": "6d940d9b89712541b19256db0e349114518bd15e",
                 "shasum": ""
             },
             "require": {
@@ -237,12 +240,12 @@
             "license": [
                 "MIT"
             ],
-            "description": "This package consists of files that are regularly used for unit testing",
+            "description": "This package consists of files that are regularly used for unit testing.",
             "keywords": [
                 "lionar",
                 "unit testing"
             ],
-            "time": "2016-09-16 09:36:51"
+            "time": "2016-09-18 12:34:21"
         },
         {
             "name": "mikey179/vfsStream",
