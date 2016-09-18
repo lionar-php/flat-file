@@ -19,7 +19,7 @@ class StackTest extends TestCase
 			$fileSystem = Mockery::mock ( 'FileSystem\\FileSystems\\LocalFileSystem' ),
 		);
 
-		$preContent = serialize ( array ( 'uniqid' => 'unique id entity' ) );
+		$preContent = serialize ( array ( 'uniqid' => 'unique id value' ) );
 		$file = Mockery::mock ( 'FileSystem\\File' );
 		$file->content = $preContent;
 
@@ -62,26 +62,48 @@ class StackTest extends TestCase
 
 	/*
 	|--------------------------------------------------------------------------
-	| Append method testing.
+	| Set method testing.
 	|--------------------------------------------------------------------------
 	*/
 
 	/**
 	 * @test
 	 */
-	public function append_withIdentifierAndEntity_callsFileWriteMethodAndAllRegisteredFileSystemsWriteMethods ( )
+	public function set_withIdentifierAndEntity_callsFileWriteMethodAndAllRegisteredFileSystemsWriteMethods ( )
 	{
 		$identifier = 'id';
-		$entity = 'entity';
+		$value = 'value';
 
-		$content = serialize ( array_merge ( unserialize ( $this->preContent ), array ( $identifier => $entity ) ) );
+		$content = serialize ( array_merge ( unserialize ( $this->preContent ), array ( $identifier => $value ) ) );
 
 		$this->file->shouldReceive ( 'write' )->with ( $content )->once ( );
 
 		foreach ( $this->fileSystems as $fileSystem )
 			$fileSystem->shouldReceive ( 'write' )->with ( $this->file )->once ( );
 
-		$this->stack->append ( $identifier, $entity );
+		$this->stack->set ( $identifier, $value );
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Get method testing
+	|--------------------------------------------------------------------------
+	*/
+
+	/**
+	 * @test
+	 */
+	public function get_withIdentifierThatDoesNotExistInStack_returnsNull ( )
+	{
+		assertThat ( $this->stack->get ( 'non existent id' ), is ( identicalTo ( null ) ) );
+	}
+
+	/**
+	 * @test
+	 */
+	public function get_withIdentifierThatDoesExistInStack_returnsValueFoundWithIdentifier ( )
+	{
+		assertThat ( $this->stack->get ( 'uniqid' ), is ( identicalTo ( 'unique id value' ) ) );
 	}
 
 	/*

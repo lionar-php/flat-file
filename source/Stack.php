@@ -18,12 +18,21 @@ class Stack implements \Agreed\Storage\Stack
 			$this->add ( $fileSystem );
 	}
 	
-	public function append ( $identifier, $entity )
+	public function set ( $identifier, $value )
 	{
 		$data = unserialize ( $this->file->content );
-		$data [ $identifier ] = $entity;
+		$data [ $identifier ] = $value;
 		$this->file->write ( serialize ( $data ) );
 		$this->write ( $this->file );
+	}
+
+	public function get ( $identifier )
+	{
+		if ( ! $this->has ( $identifier ) )
+			return null;
+
+		$entries = unserialize ( $this->file->content );
+		return $entries [ $identifier ];
 	}
 
 	public function has ( $identifier ) : bool

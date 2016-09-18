@@ -20,6 +20,7 @@ $fileTree = new FileTree ( array (
 $fileSystem = new LocalFileSystem ( $fileTree );
 $stack = new Stack ( array ( $fileSystem ), $file );
 
-$stack->append ( 'id', 'my value' );
+$stack->set ( 'id', 'my value' );
+$stack->set ( 'blah', 'baaah' );
 
-dd ( $stack->has ( 'id' ) );
+dd ( $stack->get ( 'blah' ) );

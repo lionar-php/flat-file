@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lionar/agreements.git",
-                "reference": "9a5091a5fba31163ad5b5ba32d2ebf42066b15f9"
+                "reference": "680ba2e8b07d2469319b6075a97b11bce5f19e2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lionar/agreements/zipball/9a5091a5fba31163ad5b5ba32d2ebf42066b15f9",
-                "reference": "9a5091a5fba31163ad5b5ba32d2ebf42066b15f9",
+                "url": "https://api.github.com/repos/lionar/agreements/zipball/680ba2e8b07d2469319b6075a97b11bce5f19e2b",
+                "reference": "680ba2e8b07d2469319b6075a97b11bce5f19e2b",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "component",
                 "lionar"
             ],
-            "time": "2016-09-17 16:42:56"
+            "time": "2016-09-18 15:29:41"
         },
         {
             "name": "lionar/file-system",
