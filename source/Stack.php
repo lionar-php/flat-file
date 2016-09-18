@@ -9,10 +9,11 @@ use InvalidArgumentException;
 class Stack implements \Agreed\Storage\Stack
 {
 	private $file = null;
-	private $fileSystems = array ( );
+	private $fileSystems, $entries = array ( );
 
 	public function __construct ( array $fileSystems, File $file )
 	{
+		$this->entries = unserialize ( $file->content );
 		$this->file = $file;
 		foreach ( $fileSystems as $fileSystem )
 			$this->add ( $fileSystem );
@@ -20,9 +21,8 @@ class Stack implements \Agreed\Storage\Stack
 	
 	public function set ( $identifier, $value )
 	{
-		$data = unserialize ( $this->file->content );
-		$data [ $identifier ] = $value;
-		$this->file->write ( serialize ( $data ) );
+		$this->entries [ $identifier ] = $value;
+		$this->file->write ( serialize ( $this->entries ) );
 		$this->write ( $this->file );
 	}
 
@@ -31,13 +31,12 @@ class Stack implements \Agreed\Storage\Stack
 		if ( ! $this->has ( $identifier ) )
 			return null;
 
-		$entries = unserialize ( $this->file->content );
-		return $entries [ $identifier ];
+		return $this->entries [ $identifier ];
 	}
 
 	public function has ( $identifier ) : bool
 	{
-		return array_key_exists ( $identifier, unserialize ( $this->file->content ) );
+		return array_key_exists ( $identifier, $this->entries );
 	}
 
 	private function add ( FileSystem $fileSystem )

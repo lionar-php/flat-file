@@ -22,5 +22,8 @@ $stack = new Stack ( array ( $fileSystem ), $file );
 
 $stack->set ( 'id', 'my value' );
 $stack->set ( 'blah', 'baaah' );
+$stack->set ( 'my id', 'uniqid' );
 
-dd ( $stack->get ( 'blah' ) );
+var_dump ( $stack->get ( 'id' ) );
+var_dump ( $stack->get ( 'blah' ) );
+var_dump ( $stack->get ( 'my id' ) );
