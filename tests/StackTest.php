@@ -22,6 +22,7 @@ class StackTest extends TestCase
 		$preContent = serialize ( array ( 'uniqid' => 'unique id value', 'some value' => 'yeah value' ) );
 		$file = Mockery::mock ( 'FileSystem\\File' );
 		$file->content = $preContent;
+		$file->shouldReceive ( 'isEmpty' );
 
 		$this->stack = new Stack ( $fileSystems, $file );
 		$this->file = $file;
@@ -63,11 +64,25 @@ class StackTest extends TestCase
 	/**
 	 * @test
 	 * @expectedException InvalidArgumentException
+	 * @dataProvider nonArrayValues
 	 */
-	public function __construct_withFileThatDoesNotContainASerializedArray_throwsException ( )
+	public function __construct_withFileThatISNotEmptyAndDoesNotContainASerializedArray_throwsException ( $value )
 	{
-		$this->file->content = serialize ( 'some value' );
-		$stack = new Stack ( $this->fileSystems, $this->file );
+		$file = Mockery::mock ( 'FileSystem\\File' );
+		$file->shouldReceive ( 'isEmpty' )->andReturn ( false );
+		$file->content = serialize ( $value );
+		$stack = new Stack ( $this->fileSystems, $file );
+	}
+
+	/**
+	 * @test
+	 */
+	public function __construct_withEmptyFile_setsEntriesAsEmptyArray ( )
+	{
+		$file = Mockery::mock ( 'FileSystem\\File' );
+		$file->shouldReceive ( 'isEmpty' )->andReturn ( true );
+		$stack = new Stack ( $this->fileSystems, $file );
+		assertThat ( $this->property ( $stack, 'entries' ), is ( emptyArray ( ) ) );
 	}
 
 	/*

@@ -212,12 +212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lionar/testing.git",
-                "reference": "03d3b6422fd525e39709b3782fe276a3450df3ef"
+                "reference": "76e306e5379c08e685da54433c5fdbcb85b9fca5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lionar/testing/zipball/03d3b6422fd525e39709b3782fe276a3450df3ef",
-                "reference": "03d3b6422fd525e39709b3782fe276a3450df3ef",
+                "url": "https://api.github.com/repos/lionar/testing/zipball/76e306e5379c08e685da54433c5fdbcb85b9fca5",
+                "reference": "76e306e5379c08e685da54433c5fdbcb85b9fca5",
                 "shasum": ""
             },
             "require": {
@@ -247,7 +247,7 @@
                 "lionar",
                 "unit testing"
             ],
-            "time": "2016-09-20 12:19:35"
+            "time": "2016-09-24 13:38:02"
         },
         {
             "name": "mikey179/vfsStream",
