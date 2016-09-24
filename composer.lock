@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lionar/agreements.git",
-                "reference": "680ba2e8b07d2469319b6075a97b11bce5f19e2b"
+                "reference": "8c3ef6fe0a1e255da7e5d9a98fc17aabd8867b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lionar/agreements/zipball/680ba2e8b07d2469319b6075a97b11bce5f19e2b",
-                "reference": "680ba2e8b07d2469319b6075a97b11bce5f19e2b",
+                "url": "https://api.github.com/repos/lionar/agreements/zipball/8c3ef6fe0a1e255da7e5d9a98fc17aabd8867b0d",
+                "reference": "8c3ef6fe0a1e255da7e5d9a98fc17aabd8867b0d",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "component",
                 "lionar"
             ],
-            "time": "2016-09-18 15:29:41"
+            "time": "2016-09-24 12:54:52"
         },
         {
             "name": "lionar/file-system",
@@ -212,19 +212,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lionar/testing.git",
-                "reference": "6d940d9b89712541b19256db0e349114518bd15e"
+                "reference": "03d3b6422fd525e39709b3782fe276a3450df3ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lionar/testing/zipball/6d940d9b89712541b19256db0e349114518bd15e",
-                "reference": "6d940d9b89712541b19256db0e349114518bd15e",
+                "url": "https://api.github.com/repos/lionar/testing/zipball/03d3b6422fd525e39709b3782fe276a3450df3ef",
+                "reference": "03d3b6422fd525e39709b3782fe276a3450df3ef",
                 "shasum": ""
             },
             "require": {
                 "hamcrest/hamcrest-php": "*",
                 "mikey179/vfsstream": "dev-master",
                 "mockery/mockery": "@stable",
-                "phpunit/phpunit": "@stable"
+                "phpunit/phpunit": "@stable",
+                "symfony/css-selector": "@stable",
+                "symfony/dom-crawler": "@stable"
             },
             "type": "library",
             "autoload": {
@@ -245,7 +247,7 @@
                 "lionar",
                 "unit testing"
             ],
-            "time": "2016-09-18 12:34:21"
+            "time": "2016-09-20 12:19:35"
         },
         {
             "name": "mikey179/vfsStream",
@@ -552,12 +554,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d883566b83ae601a50b38b249e92450dc57cf875"
+                "reference": "d3be8294e4729abcf8e6e207f25cdcb299cd1c88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d883566b83ae601a50b38b249e92450dc57cf875",
-                "reference": "d883566b83ae601a50b38b249e92450dc57cf875",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d3be8294e4729abcf8e6e207f25cdcb299cd1c88",
+                "reference": "d3be8294e4729abcf8e6e207f25cdcb299cd1c88",
                 "shasum": ""
             },
             "require": {
@@ -606,7 +608,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-07-19 16:08:43"
+            "time": "2016-09-21 19:41:08"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -858,12 +860,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f37c4c2c91142e9dd1eac01de508bbc1f62c1d65"
+                "reference": "3d7e92beaed4518fc1c4f67091f0ebe23e1e0b40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f37c4c2c91142e9dd1eac01de508bbc1f62c1d65",
-                "reference": "f37c4c2c91142e9dd1eac01de508bbc1f62c1d65",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3d7e92beaed4518fc1c4f67091f0ebe23e1e0b40",
+                "reference": "3d7e92beaed4518fc1c4f67091f0ebe23e1e0b40",
                 "shasum": ""
             },
             "require": {
@@ -932,7 +934,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-09-08 05:23:43"
+            "time": "2016-09-22 17:38:35"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1507,17 +1509,185 @@
             "time": "2016-02-04 12:56:52"
         },
         {
+            "name": "symfony/css-selector",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "3912a05e7ae31afb78101f9de1be6b143c064fac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/3912a05e7ae31afb78101f9de1be6b143c064fac",
+                "reference": "3912a05e7ae31afb78101f9de1be6b143c064fac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony CssSelector Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-09-06 11:07:23"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "241ffb09788b99db0e6b74740ae394850bc456f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/241ffb09788b99db0e6b74740ae394850bc456f2",
+                "reference": "241ffb09788b99db0e6b74740ae394850bc456f2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-08-31 11:20:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "53ad9faffe141fbe8f98cd6a7fd9a5e84513f56c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/53ad9faffe141fbe8f98cd6a7fd9a5e84513f56c",
+                "reference": "53ad9faffe141fbe8f98cd6a7fd9a5e84513f56c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-08-30 17:06:17"
+        },
+        {
             "name": "symfony/yaml",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "46b44cb89d05e691f2719d468fd476d57487b487"
+                "reference": "7fbb0dfc86370757774ff2d9bd5c3b89c9aac1a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/46b44cb89d05e691f2719d468fd476d57487b487",
-                "reference": "46b44cb89d05e691f2719d468fd476d57487b487",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/7fbb0dfc86370757774ff2d9bd5c3b89c9aac1a8",
+                "reference": "7fbb0dfc86370757774ff2d9bd5c3b89c9aac1a8",
                 "shasum": ""
             },
             "require": {
@@ -1559,7 +1729,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-14 23:17:14"
+            "time": "2016-09-20 08:33:13"
         },
         {
             "name": "webmozart/assert",

@@ -19,7 +19,7 @@ class StackTest extends TestCase
 			$fileSystem = Mockery::mock ( 'FileSystem\\FileSystems\\LocalFileSystem' ),
 		);
 
-		$preContent = serialize ( array ( 'uniqid' => 'unique id value' ) );
+		$preContent = serialize ( array ( 'uniqid' => 'unique id value', 'some value' => 'yeah value' ) );
 		$file = Mockery::mock ( 'FileSystem\\File' );
 		$file->content = $preContent;
 
@@ -31,7 +31,7 @@ class StackTest extends TestCase
 
 	/*
 	|--------------------------------------------------------------------------
-	| Constructor testing
+	| Constructor testing.
 	|--------------------------------------------------------------------------
 	*/
 
@@ -42,7 +42,7 @@ class StackTest extends TestCase
 	public function __construct_withArrayWithNonFileSystemObject_throwsException ( )
 	{
 		$fileSystems = array ( 'non file system' );
-		$stack = new Stack ( $fileSystems );
+		$stack = new Stack ( $fileSystems, $this->file );
 	}
 
 	/**
@@ -58,6 +58,16 @@ class StackTest extends TestCase
 
 		$stack = new Stack ( $fileSystems, $this->file );
 		assertThat ( $this->property ( $stack, 'fileSystems' ), is ( arrayWithSize ( 1 ) ) );
+	}
+
+	/**
+	 * @test
+	 * @expectedException InvalidArgumentException
+	 */
+	public function __construct_withFileThatDoesNotContainASerializedArray_throwsException ( )
+	{
+		$this->file->content = serialize ( 'some value' );
+		$stack = new Stack ( $this->fileSystems, $this->file );
 	}
 
 	/*
@@ -86,7 +96,21 @@ class StackTest extends TestCase
 
 	/*
 	|--------------------------------------------------------------------------
-	| Get method testing
+	| All method testing.
+	|--------------------------------------------------------------------------
+	*/
+
+	/**
+	 * @test
+	 */
+	public function all_whenFileHasElements_returnsElementsAsArray ( )
+	{
+		assertThat ( $this->stack->all ( ), is ( identicalTo ( unserialize ( $this->file->content ) ) ) );
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Get method testing.
 	|--------------------------------------------------------------------------
 	*/
 

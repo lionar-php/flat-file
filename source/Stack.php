@@ -13,7 +13,7 @@ class Stack implements \Agreed\Storage\Stack
 
 	public function __construct ( array $fileSystems, File $file )
 	{
-		$this->entries = unserialize ( $file->content );
+		$this->prepare ( $file );
 		$this->file = $file;
 		foreach ( $fileSystems as $fileSystem )
 			$this->add ( $fileSystem );
@@ -24,6 +24,11 @@ class Stack implements \Agreed\Storage\Stack
 		$this->entries [ $identifier ] = $value;
 		$this->file->write ( serialize ( $this->entries ) );
 		$this->write ( $this->file );
+	}
+
+	public function all ( ) : array
+	{
+		return $this->entries;
 	}
 
 	public function get ( $identifier )
@@ -48,5 +53,12 @@ class Stack implements \Agreed\Storage\Stack
 	{
 		foreach ( $this->fileSystems as $fileSystem )
 			$fileSystem->write ( $file );
+	}
+
+	private function prepare ( File $file )
+	{
+		if ( ! is_array ( ( $contents = unserialize ( $file->content ) ) ) )
+			throw new InvalidArgumentException ( "The file contents of $file->path must be a serialized array." );
+		$this->entries = unserialize ( $file->content ); 
 	}
 }
