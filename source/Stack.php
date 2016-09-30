@@ -6,7 +6,7 @@ use FileSystem\File;
 use FileSystem\FileSystem;
 use InvalidArgumentException;
 
-class Stack implements \Agreed\Storage\Stack
+class Stack implements \Agreed\Technical\Storage\Stack
 {
 	private $file = null;
 	private $fileSystems, $entries = array ( );
