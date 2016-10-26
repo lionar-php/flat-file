@@ -8,22 +8,26 @@ use InvalidArgumentException;
 
 class Stack implements \Agreed\Technical\Storage\Stack
 {
-	private $file = null;
-	private $fileSystems, $entries = array ( );
+	private $entries = array ( );
+	private $fileSystem, $file = null;
 
-	public function __construct ( array $fileSystems, File $file )
+	public function __construct ( FileSystem $fileSystem, File $file )
 	{
-		$this->entries = $this->prepare ( $file );
+		$this->entries = $this->read ( $file );
+		$this->fileSystem = $fileSystem;
 		$this->file = $file;
-		foreach ( $fileSystems as $fileSystem )
-			$this->add ( $fileSystem );
 	}
-	
+
 	public function set ( $identifier, $value )
 	{
 		$this->entries [ $identifier ] = $value;
 		$this->file->write ( serialize ( $this->entries ) );
-		$this->write ( $this->file );
+		$this->fileSystem->write ( $this->file );
+	}
+
+	public function has ( $identifier ) : bool
+	{
+		return ( bool ) isset ( $this->entries [ $identifier ] );
 	}
 
 	public function all ( ) : array
@@ -33,29 +37,11 @@ class Stack implements \Agreed\Technical\Storage\Stack
 
 	public function get ( $identifier )
 	{
-		if ( ! $this->has ( $identifier ) )
-			return null;
-
-		return $this->entries [ $identifier ];
+		if ( $this->has ( $identifier ) )
+			return $this->entries [ $identifier ];
 	}
 
-	public function has ( $identifier ) : bool
-	{
-		return array_key_exists ( $identifier, $this->entries );
-	}
-
-	private function add ( FileSystem $fileSystem )
-	{
-		$this->fileSystems [ get_class ( $fileSystem ) ] = $fileSystem;
-	}
-
-	private function write ( File $file )
-	{
-		foreach ( $this->fileSystems as $fileSystem )
-			$fileSystem->write ( $file );
-	}
-
-	private function prepare ( File $file )
+	private function read ( File $file )
 	{
 		if ( $file->isEmpty ( ) )
 			return array ( );

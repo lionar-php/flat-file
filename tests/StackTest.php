@@ -9,69 +9,37 @@ use Testing\TestCase;
 
 class StackTest extends TestCase
 {
-	private $stack, $file, $fileSystems = null;
-	private $preContent = '';
+	private $stack, $file = null;
 
 	public function setUp ( )
 	{
-		$fileSystems = array (
-
-			$fileSystem = Mockery::mock ( 'FileSystem\\FileSystems\\LocalFileSystem' ),
-		);
-
-		$preContent = serialize ( array ( 'uniqid' => 'unique id value', 'some value' => 'yeah value' ) );
-		$file = Mockery::mock ( 'FileSystem\\File' );
-		$file->content = $preContent;
-		$file->shouldReceive ( 'isEmpty' );
-
-		$this->stack = new Stack ( $fileSystems, $file );
-		$this->file = $file;
-		$this->fileSystems = $fileSystems;
-		$this->preContent = $preContent;
+		$this->fileSystem = $fileSystem = Mockery::mock ( 'FileSystem\\FileSystem' )->shouldIgnoreMissing ( );
+		$this->file = $file = Mockery::mock ( 'FileSystem\\File' )->shouldIgnoreMissing ( );
+		$this->file->content = serialize ( array ( ) );
+		$this->stack = new Stack ( $fileSystem, $file );
 	}
 
 	/*
 	|--------------------------------------------------------------------------
-	| Constructor testing.
+	| Construction testing.
 	|--------------------------------------------------------------------------
+	|
+	| The constructor should initialize the entries 
+	| inside the stack. Here we test the entries are correctly
+	| initialized.
 	*/
-
-	/**
-	 * @test
-	 * @expectedException  TypeError
-	 */
-	public function __construct_withArrayWithNonFileSystemObject_throwsException ( )
-	{
-		$fileSystems = array ( 'non file system' );
-		$stack = new Stack ( $fileSystems, $this->file );
-	}
-
-	/**
-	 * @test
-	 */
-	public function __construct_withArrayOffFileSystemsWithDuplicateFileSystemType_addsItOnlyOnce ( )
-	{
-		$fileSystems = array (
-
-			$fileSystem1 = Mockery::mock ( 'FileSystem\\FileSystems\\LocalFileSystem' ),
-			$fileSystem2 = Mockery::mock ( 'FileSystem\\FileSystems\\LocalFileSystem' ),
-		);
-
-		$stack = new Stack ( $fileSystems, $this->file );
-		assertThat ( $this->property ( $stack, 'fileSystems' ), is ( arrayWithSize ( 1 ) ) );
-	}
 
 	/**
 	 * @test
 	 * @expectedException InvalidArgumentException
 	 * @dataProvider nonArrayValues
 	 */
-	public function __construct_withFileThatISNotEmptyAndDoesNotContainASerializedArray_throwsException ( $value )
+	public function __construct_withFileThatIsNotEmptyAndDoesNotContainASerializedArray_throwsException ( $value )
 	{
-		$file = Mockery::mock ( 'FileSystem\\File' );
-		$file->shouldReceive ( 'isEmpty' )->andReturn ( false );
-		$file->content = serialize ( $value );
-		$stack = new Stack ( $this->fileSystems, $file );
+		$this->file->shouldReceive ( 'isEmpty' )->andReturn ( false );
+		$this->file->content = serialize ( $value );
+
+		$stack = new Stack ( $this->fileSystem, $this->file );
 	}
 
 	/**
@@ -79,76 +47,81 @@ class StackTest extends TestCase
 	 */
 	public function __construct_withEmptyFile_setsEntriesAsEmptyArray ( )
 	{
-		$file = Mockery::mock ( 'FileSystem\\File' );
-		$file->shouldReceive ( 'isEmpty' )->andReturn ( true );
-		$stack = new Stack ( $this->fileSystems, $file );
+		$this->file->shouldReceive ( 'isEmpty' )->andReturn ( true );
+
+		$stack = new Stack ( $this->fileSystem, $this->file );
 		assertThat ( $this->property ( $stack, 'entries' ), is ( emptyArray ( ) ) );
+	}
+
+	/**
+	 * @test
+	 */
+	public function __construct_withFileWithSerializedArray_unserializesArrayAndSetsThatAsEntries ( )
+	{
+		$entry = array ( 'name' => 'Aron Wouters' );
+
+		$this->file->content = serialize ( $entry );
+		$this->file->shouldReceive ( 'isEmpty' )->andReturn ( false );
+
+		$stack = new Stack ( $this->fileSystem, $this->file );
+		assertThat ( $this->property ( $stack, 'entries' ), is ( identicalTo ( $entry ) ) );
 	}
 
 	/*
 	|--------------------------------------------------------------------------
-	| Set method testing.
+	| Setting values inside the stack.
 	|--------------------------------------------------------------------------
+	|
+	| Set allows to add values to the flat file stack. Here we
+	| test that entries are correctly stored in memory and that
+	| the correct file system methods are called.
 	*/
 
 	/**
 	 * @test
 	 */
-	public function set_withIdentifierAndEntity_callsFileWriteMethodAndAllRegisteredFileSystemsWriteMethods ( )
+	public function set_withEntry_addsEntryToStackEntries ( )
 	{
-		$identifier = 'id';
-		$value = 'value';
+		$identifier = 'name';
+		$value = 'Aron Wouters';
+		$this->stack->set ( $identifier, $value );
+		assertThat ( $this->property ( $this->stack, 'entries' ), hasEntry ( $identifier, $value ) );
+	}
 
-		$content = serialize ( array_merge ( unserialize ( $this->preContent ), array ( $identifier => $value ) ) );
+	/**
+	 * @test
+	 */
+	public function set_withEntry_callsFileWriteWithSerializedEntry ( )
+	{
+		$identifier = 'name';
+		$value = 'Aron Wouters';
 
-		$this->file->shouldReceive ( 'write' )->with ( $content )->once ( );
+		$this->file->shouldReceive ( 'write' )->with ( serialize ( array ( $identifier => $value) ) )->once ( );
+		
+		$this->stack->set ( $identifier, $value );
+	}
 
-		foreach ( $this->fileSystems as $fileSystem )
-			$fileSystem->shouldReceive ( 'write' )->with ( $this->file )->once ( );
+	/**
+	 * @test
+	 */
+	public function set_withEntry_callsFileSystemWriteWithFile ( )
+	{
+		$identifier = 'name';
+		$value = 'Aron Wouters';
 
+		$this->fileSystem->shouldReceive ( 'write' )->with ( $this->file )->once ( );
+		
 		$this->stack->set ( $identifier, $value );
 	}
 
 	/*
 	|--------------------------------------------------------------------------
-	| All method testing.
+	| Check if the stack has values.
 	|--------------------------------------------------------------------------
-	*/
-
-	/**
-	 * @test
-	 */
-	public function all_whenFileHasElements_returnsElementsAsArray ( )
-	{
-		assertThat ( $this->stack->all ( ), is ( identicalTo ( unserialize ( $this->file->content ) ) ) );
-	}
-
-	/*
-	|--------------------------------------------------------------------------
-	| Get method testing.
-	|--------------------------------------------------------------------------
-	*/
-
-	/**
-	 * @test
-	 */
-	public function get_withIdentifierThatDoesNotExistInStack_returnsNull ( )
-	{
-		assertThat ( $this->stack->get ( 'non existent id' ), is ( identicalTo ( null ) ) );
-	}
-
-	/**
-	 * @test
-	 */
-	public function get_withIdentifierThatDoesExistInStack_returnsValueFoundWithIdentifier ( )
-	{
-		assertThat ( $this->stack->get ( 'uniqid' ), is ( identicalTo ( 'unique id value' ) ) );
-	}
-
-	/*
-	|--------------------------------------------------------------------------
-	| Has method testing.
-	|--------------------------------------------------------------------------
+	|
+	| Has provides the functionality to check whether the stack
+	| has a certain identifier registered. Here we test if the correct
+	| boolean value is returned.
 	*/
 
 	/**
@@ -166,6 +139,65 @@ class StackTest extends TestCase
 	public function has_withIdentifierThatDoesExistInsideStack_returnsTrue ( )
 	{
 		$identifier = 'uniqid';
+		$this->stack->set ( $identifier, 'value' );
+
 		assertThat ( $this->stack->has ( $identifier ), is ( identicalTo ( true ) ) );
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Getting all values from the stack.
+	|--------------------------------------------------------------------------
+	|
+	| All provides functionality to get all values from the stack as
+	| an array. Here we test that all returns all the values set
+	| in the stack.
+	*/
+
+	/**
+	 * @test
+	 */
+	public function all_withMultipleEntriesInStack_returnsAllEntries ( )
+	{
+		$entries = array (
+
+			'name'	=> 'Aron Wouters',
+			'street' => 'Klaphekstraat'
+		);
+
+		foreach ( $entries as $identifier => $value )
+			$this->stack->set ( $identifier, $value );
+
+		assertThat ( $this->stack->all ( ), is ( identicalTo ( $entries ) ) );
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Getting single values from the stack.
+	|--------------------------------------------------------------------------
+	|
+	| Get provides the functionality to retrieve singular values
+	| by identifier. Here we test the correct value is returned.
+	*/
+
+	/**
+	 * @test
+	 */
+	public function get_withIdentifierThatDoesNotExistInStack_returnsNull ( )
+	{
+		assertThat ( $this->stack->get ( 'non existent id' ), is ( identicalTo ( null ) ) );
+	}
+
+	/**
+	 * @test
+	 */
+	public function get_withIdentifierThatDoesExistInStack_returnsValueFoundWithIdentifier ( )
+	{
+		$identifier = 'uniqid';
+		$value = 'value';
+
+		$this->stack->set ( $identifier, $value );
+
+		assertThat ( $this->stack->get ( $identifier ), is ( identicalTo ( $value ) ) );
 	}
 }
